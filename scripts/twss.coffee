@@ -23,7 +23,7 @@ module.exports = (robot) ->
   robot.hear /.*/i, (msg) ->
     natural = require 'natural'
     # path from the root of hubot
-    natural.BayesClassifier.load './twss/classifier-twss.json', null, (err, classifier) ->
+    natural.BayesClassifier.load './scripts/twss/classifier-twss.json', null, (err, classifier) ->
       check = (grams) ->
         c = classifier.getClassifications(grams)
         cmp = {}
@@ -34,6 +34,6 @@ module.exports = (robot) ->
           return 'positive'
         return false
       if check(msg.message.text.unrepeat().tokenize().stop().stem().bigram()) == 'positive'
-        s = ["that's what she said","said the actress to the bishop","she said that","said the girl to the soldier"]
+        s = ["that's what she said"]
         i = Math.floor(Math.random()*s.length)
         msg.send s[i]
